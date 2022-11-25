@@ -12,14 +12,7 @@ from rest_framework.response import Response
 class ArchivoList(generics.ListAPIView):
     """Vista que lista todos los archivos"""
     # AUTENTICACION
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
-    #def get(self, request, format=None):
-     #   content = {
-      #      'user': str(request.user),  # `django.contrib.auth.User` instance.
-       #     'auth': str(request.auth),  # None
-        #}
-        #return Response(content)
+    permission_classes = [IsAuthenticated]
     # queryset
     queryset = Archivo.objects.all()
     serializer_class = ArchivoSerializer
@@ -31,8 +24,7 @@ class ArchivoList(generics.ListAPIView):
 class ArchivoListDetail(generics.RetrieveAPIView):
 
     # AUTENTICACION
-    #authentication_classes = [SessionAuthentication, BasicAuthentication]
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     # queryset
     queryset = Archivo.objects.all()
     serializer_class = ArchivoSerializer

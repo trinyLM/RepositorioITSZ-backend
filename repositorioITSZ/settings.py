@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     #drf auth token
     'rest_framework.authtoken',
+    'authemail',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +146,24 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+#campos para el registro con email
+"""EMAIL_FROM ='336e567a0446fd'
+EMAIL_BCC ='336e567a0446fd'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = '336e567a0446fd'
+EMAIL_HOST_PASSWORD = 'f5e98e01763afa'
+EMAIL_PORT = '2525'
+"""
+
+EMAIL_FROM ='186W0568@zongolica.tecnm.mx'
+EMAIL_BCC ='186W0568@zongolica.tecnm.mx'
+
+EMAIL_HOST ='smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER ='186W0568@zongolica.tecnm.mx'
+EMAIL_HOST_PASSWORD ='TRINIDAD@1806'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
