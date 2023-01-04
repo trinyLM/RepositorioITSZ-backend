@@ -1,12 +1,10 @@
 
 from rest_framework import generics
-from rest_framework.authentication import TokenAuthentication
 from .models import Archivo
 from .serializers import ArchivoSerializer
 from .pagination import CustomPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 
 
 class ArchivoList(generics.ListAPIView):
@@ -18,7 +16,7 @@ class ArchivoList(generics.ListAPIView):
     serializer_class = ArchivoSerializer
     pagination_class = CustomPagination
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['titulo', 'materia', 'fecha_publicacion']
+    filterset_fields = ['titulo', 'materia', 'fecha_publicacion','tipo_de_publicacion']
 
 
 class ArchivoListDetail(generics.RetrieveAPIView):

@@ -76,12 +76,12 @@ class Archivo(models.Model):
     titulo = models.CharField(
         "Titulo", max_length=255, null=False, blank=False)
     imagen = models.ImageField(
-        "Imagen", upload_to='img/', null=False, blank=False)
+        "Imagen", upload_to='imgs/', null=False, blank=False)
     materia = models.CharField("Materia", max_length=255)
     fecha_publicacion = models.DateField("Fecha de publicacion",)
     tipo_de_publicacion = models.ForeignKey(
         TipoDePublicacion, on_delete=models.CASCADE)
-    pdf = models.FileField("pdf", upload_to='archivos/',
+    pdf = models.FileField("pdf", upload_to='pdfs/',
                            storage=None, default="")
     resumen = models.TextField("Resumen", null=False, blank=True, default="")
     autor = models.ManyToManyField(Autor)

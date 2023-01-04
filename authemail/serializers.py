@@ -20,7 +20,7 @@ class SignupSerializer(serializers.Serializer):
     def validate(self, attrs):
         if not attrs['email'].endswith("zongolica.tecnm.mx"):
             raise serializers.ValidationError(
-                {"email": "solo se aceptan correos instucionales"})
+                {"email": "solo se aceptan correos instucionales","status":"failed"})
         return attrs
 
 

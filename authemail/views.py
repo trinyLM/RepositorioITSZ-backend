@@ -6,7 +6,7 @@ from django.utils.translation import gettext as _
 
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import AllowAny, IsAuthenticated,IsAdminUser
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -35,12 +35,15 @@ class Signup(APIView):
             matricula = serializer.data['matricula']
             apellido_materno = serializer.data['apellido_materno']
 
-            must_validate_email = getattr(settings, "AUTH_EMAIL_VERIFICATION", True)
+            must_validate_email = getattr(
+                settings, "AUTH_EMAIL_VERIFICATION", True)
 
             try:
                 user = get_user_model().objects.get(email=email)
                 if user.is_verified:
-                    content = {'detail': _('Email address already taken.')}
+                    print(str(user))
+                    content = {'detail': _(
+                        'Email address already taken.'), "status": "failed"}
                     return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
                 try:
@@ -58,7 +61,7 @@ class Signup(APIView):
             user.first_name = first_name
             user.last_name = last_name
             user.matricula = matricula
-            user.apellido_materno =apellido_materno 
+            user.apellido_materno = apellido_materno
             if not must_validate_email:
                 user.is_verified = True
                 send_multi_format_email('welcome_email',
@@ -69,11 +72,12 @@ class Signup(APIView):
             if must_validate_email:
                 # Create and associate signup code
                 ipaddr = self.request.META.get('REMOTE_ADDR', '0.0.0.0')
-                signup_code = SignupCode.objects.create_signup_code(user, ipaddr)
+                signup_code = SignupCode.objects.create_signup_code(
+                    user, ipaddr)
                 signup_code.send_signup_email()
 
             content = {'email': email, 'first_name': first_name,
-                       'last_name': last_name}
+                       'last_name': last_name, "status": "success", }
             return Response(content, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -115,7 +119,7 @@ class Login(APIView):
                 if user.is_verified:
                     if user.is_active:
                         token, created = Token.objects.get_or_create(user=user)
-                        return Response({'email':email,'token': token.key},
+                        return Response({'email': email, 'token': token.key},
                                         status=status.HTTP_200_OK)
                     else:
                         content = {'detail': _('User account not active.')}
@@ -127,7 +131,7 @@ class Login(APIView):
                     return Response(content, status=status.HTTP_401_UNAUTHORIZED)
             else:
                 content = {'detail':
-                           _('Unable to login with provided credentials.')}
+                           _('No se puede iniciar sesión con las credenciales proporcionadas.')}
                 return Response(content, status=status.HTTP_401_UNAUTHORIZED)
 
         else:
@@ -167,7 +171,8 @@ class PasswordReset(APIView):
 
                 if user.is_verified and user.is_active:
                     password_reset_code = \
-                        PasswordResetCode.objects.create_password_reset_code(user)
+                        PasswordResetCode.objects.create_password_reset_code(
+                            user)
                     password_reset_code.send_password_reset_email()
                     content = {'email': email}
                     return Response(content, status=status.HTTP_201_CREATED)
@@ -262,7 +267,8 @@ class EmailChange(APIView):
                     raise get_user_model().DoesNotExist
 
             except get_user_model().DoesNotExist:
-                email_change_code = EmailChangeCode.objects.create_email_change_code(user, email_new)
+                email_change_code = EmailChangeCode.objects.create_email_change_code(
+                    user, email_new)
 
                 email_change_code.send_email_change_emails()
 
@@ -344,7 +350,7 @@ class PasswordChange(APIView):
 
 
 class UserMe(APIView):
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
 
     def get(self, request, format=None):

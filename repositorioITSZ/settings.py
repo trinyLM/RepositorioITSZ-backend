@@ -1,5 +1,5 @@
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-$te!!n)yfa%$*^b7byf$3%_)4scf_@4o8&whn1^obh2c&_-nv#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -29,16 +29,20 @@ INSTALLED_APPS = [
     #mis aplicaciones
     "autenticacion",
     "archivos",
+    "gestion_archivos",
 
     #django rest framework
     'rest_framework',
-
+    #aplicacion para importar y exportar archivos de excel
+    'import_export',
     #drf filters
     'django_filters',
 
     #drf auth token
     'rest_framework.authtoken',
     'authemail',
+    #cors
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = 'repositorioITSZ.urls'
@@ -118,10 +124,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 REST_FRAMEWORK = {
+    #realizar filtros en las peticiones get
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    
+    #sistema de autenticacion por token
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-    ]
+    ],
+    
+    
+    #custom docs
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    
+    # paginacion default de rest
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 8,
     
 }
 AUTH_USER_MODEL = "autenticacion.CustomUser"
@@ -141,6 +158,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
+# media root
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -167,3 +190,12 @@ EMAIL_HOST_USER ='186W0568@zongolica.tecnm.mx'
 EMAIL_HOST_PASSWORD ='TRINIDAD@1806'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+
+
+#settings from corsheaders
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = ["https://e82d-200-68-170-8.ngrok.io"]
+
+# cambiar cada que se hagan pruebas externas para permitir el crf token
+CSRF_TRUSTED_ORIGINS = ['https://e82d-200-68-170-8.ngrok.io']
