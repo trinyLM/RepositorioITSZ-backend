@@ -1,7 +1,7 @@
 
 from rest_framework import generics
-from .models import Archivo
-from .serializers import ArchivoSerializer
+from .models import Archivo,Autor
+from .serializers import ArchivoSerializer,AutorSerializer
 from .pagination import CustomPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
@@ -29,3 +29,21 @@ class ArchivoListDetail(generics.RetrieveAPIView):
 
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['titulo', 'materia', 'fecha_publicacion']
+
+
+
+class AutorList(generics.ListAPIView):
+    
+    #permission_classes =[]
+    queryset = Autor.objects.all()
+    serializer_class = AutorSerializer
+
+
+class AutorListDetail(generics.RetrieveAPIView):
+    queryset = Autor.objects.all()
+    serializer_class = AutorSerializer
+
+
+
+
+

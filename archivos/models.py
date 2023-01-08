@@ -84,7 +84,7 @@ class Archivo(models.Model):
     pdf = models.FileField("pdf", upload_to='pdfs/',
                            storage=None, default="")
     resumen = models.TextField("Resumen", null=False, blank=True, default="")
-    autor = models.ManyToManyField(Autor)
+    autor = models.ManyToManyField(Autor,related_name="archivos",)
 
     def Autor(self):
         return ",".join([str(p) for p in self.autor.all()])
