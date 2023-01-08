@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 class ArchivoList(generics.ListAPIView):
     """Vista que lista todos los archivos"""
     # AUTENTICACION
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     # queryset
     queryset = Archivo.objects.all()
     serializer_class = ArchivoSerializer
@@ -22,7 +22,7 @@ class ArchivoList(generics.ListAPIView):
 class ArchivoListDetail(generics.RetrieveAPIView):
 
     # AUTENTICACION
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     # queryset
     queryset = Archivo.objects.all()
     serializer_class = ArchivoSerializer
