@@ -1,2 +1,2 @@
 Verifica tu correo electronico para imgresar al repositorio ITSZ:
-    http://127.0.0.1:8000/api/auth/signupverify.html/?code={{ code }}
+    {{code}}

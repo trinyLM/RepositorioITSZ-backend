@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'rest_framework',
     #aplicacion para importar y exportar archivos de excel
     'import_export',
+    
     #drf filters
     'django_filters',
 
@@ -173,15 +174,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 #campos para el registro con email
-"""EMAIL_FROM ='336e567a0446fd'
+EMAIL_FROM ='336e567a0446fd'
 EMAIL_BCC ='336e567a0446fd'
 EMAIL_HOST = 'smtp.mailtrap.io'
 EMAIL_HOST_USER = '336e567a0446fd'
 EMAIL_HOST_PASSWORD = 'f5e98e01763afa'
 EMAIL_PORT = '2525'
-"""
 
-EMAIL_FROM ='186W0568@zongolica.tecnm.mx'
+
+""" EMAIL_FROM ='186W0568@zongolica.tecnm.mx'
 EMAIL_BCC ='186W0568@zongolica.tecnm.mx'
 
 EMAIL_HOST ='smtp.gmail.com'
@@ -189,13 +190,13 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER ='186W0568@zongolica.tecnm.mx'
 EMAIL_HOST_PASSWORD ='TRINIDAD@1806'
 EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+EMAIL_USE_SSL = False """
 
 
 
 #settings from corsheaders
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOWED_ORIGINS = ["https://e82d-200-68-170-8.ngrok.io"]
+CORS_ALLOWED_ORIGINS = ["https://8032-200-68-169-181.ngrok.io"]
 
 # cambiar cada que se hagan pruebas externas para permitir el crf token
-CSRF_TRUSTED_ORIGINS = ['https://e82d-200-68-170-8.ngrok.io']
+CSRF_TRUSTED_ORIGINS = ['https://8032-200-68-169-181.ngrok.io']

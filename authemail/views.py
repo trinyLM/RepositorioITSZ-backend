@@ -106,7 +106,7 @@ class SignupVerify(APIView):
 class Login(APIView):
     permission_classes = (AllowAny,)
     serializer_class = LoginSerializer
-
+   
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
 
@@ -118,8 +118,10 @@ class Login(APIView):
             if user:
                 if user.is_verified:
                     if user.is_active:
+                        
+                        is_staff = user.is_staff
                         token, created = Token.objects.get_or_create(user=user)
-                        return Response({'email': email, 'token': token.key},
+                        return Response({'email': email, 'token': token.key, "is_staff": is_staff},
                                         status=status.HTTP_200_OK)
                     else:
                         content = {'detail': _('User account not active.')}
