@@ -74,7 +74,7 @@ class Archivo(models.Model):
     """Modelo de archivo, se registran todos los datos de las publicaciones. """
     id = models.AutoField(primary_key=True)
     titulo = models.CharField(
-        "Titulo", max_length=255, null=False, blank=False)
+        "Titulo", max_length=255,help_text="nombre de la publicacion", null=False, blank=False)
     imagen = models.ImageField(
         "Imagen", upload_to='imgs/', null=False, blank=False)
     materia = models.CharField("Materia", max_length=255)

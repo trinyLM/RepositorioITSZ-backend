@@ -3,10 +3,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-$te!!n)yfa%$*^b7byf$3%_)4scf_@4o8&whn1^obh2c&_-nv#'
 
@@ -143,8 +139,6 @@ REST_FRAMEWORK = {
     
 }
 AUTH_USER_MODEL = "autenticacion.CustomUser"
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = 'es-mx'
 
@@ -155,8 +149,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
 
@@ -196,7 +188,7 @@ EMAIL_USE_SSL = False """
 
 #settings from corsheaders
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOWED_ORIGINS = ["https://8032-200-68-169-181.ngrok.io"]
+CORS_ALLOWED_ORIGINS = ["https://3d7a-2806-10a6-16-85e8-79a6-669e-b0bf-1c6f.ngrok.io"]
 
 # cambiar cada que se hagan pruebas externas para permitir el crf token
-CSRF_TRUSTED_ORIGINS = ['https://8032-200-68-169-181.ngrok.io']
+CSRF_TRUSTED_ORIGINS = ['https://3d7a-2806-10a6-16-85e8-79a6-669e-b0bf-1c6f.ngrok.io']

@@ -8,45 +8,40 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class ArchivoList(generics.ListAPIView):
-    """Vista que lista todos los archivos"""
-    # AUTENTICACION
-    #permission_classes = [IsAuthenticated]
-    # queryset
+    """Vista que lista todos los archivos, incluye filtro por busqueda general y busqueda especifica"""
+    permission_classes = [IsAuthenticated]
     queryset = Archivo.objects.all()
     serializer_class = ArchivoSerializer
     pagination_class = CustomPagination
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     search_fields = ['titulo', 'materia', 'autor__nombres',
                      'tipo_de_publicacion__nombre', 'fecha_publicacion', 'resumen']
-
-    #filter_backends = [DjangoFilterBackend]
-    #filterset_fields = ['titulo', 'materia', 'fecha_publicacion','tipo_de_publicacion']
+    filterset_fields = ['titulo', 'materia', 'fecha_publicacion',
+                        'tipo_de_publicacion', "resumen", "autor"]
 
 
 class ArchivoListDetail(generics.RetrieveAPIView):
-
-    # AUTENTICACION
+    """Muestra una archivo especifico mediante el id"""
     permission_classes = [IsAuthenticated]
-    # queryset
     queryset = Archivo.objects.all()
     serializer_class = ArchivoSerializer
 
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['titulo', 'materia', 'fecha_publicacion']
-
 
 class AutorList(generics.ListAPIView):
-
-    #permission_classes = [IsAuthenticated]
+    """Lista todos los autores existentes, incluye filtro por busqueda general y busqueda especifica"""
+    permission_classes = [IsAuthenticated]
     queryset = Autor.objects.all()
     serializer_class = AutorSerializer
     pagination_class = CustomPagination
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     search_fields = ['nombres', 'apellido_paterno', 'apellido_materno', 'matricula',
                      'asesor_interno', 'asesor_externo', 'carrera__nombre', 'campus__nombre']
+    filterset_fields = ['nombres', 'apellido_paterno', 'apellido_materno',
+                        'matricula', 'asesor_interno', 'asesor_externo', 'carrera', 'campus']
 
 
 class AutorListDetail(generics.RetrieveAPIView):
-    #permission_classes = [IsAuthenticated]
+    """Muestra una autor especifico mediante el id"""
+    permission_classes = [IsAuthenticated]
     queryset = Autor.objects.all()
     serializer_class = AutorSerializer

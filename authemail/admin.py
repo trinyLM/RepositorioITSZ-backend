@@ -51,26 +51,6 @@ class PasswordResetCodeInline(admin.TabularInline):
         return False
 
 
-class EmailChangeCodeAdmin(admin.ModelAdmin):
-    list_display = ('code', 'user', 'email', 'created_at')
-    ordering = ('-created_at',)
-    readonly_fields = ('user', 'code', 'email')
-
-    def has_add_permission(self, request, obj=None):
-        return False
-
-
-class EmailChangeCodeInline(admin.TabularInline):
-    model = EmailChangeCode
-    fieldsets = (
-        (None, {
-            'fields': ('code', 'email', 'created_at')
-        }),
-    )
-    readonly_fields = ('code', 'email', 'created_at')
-
-    def has_add_permission(self, request, obj=None):
-        return False
 
 
 class EmailUserAdmin(UserAdmin):
@@ -89,7 +69,7 @@ class EmailUserAdmin(UserAdmin):
     )
     form = EmailUserChangeForm
     add_form = EmailUserCreationForm
-    inlines = [SignupCodeInline, EmailChangeCodeInline, PasswordResetCodeInline]
+    inlines = [SignupCodeInline, PasswordResetCodeInline]
     list_display = ('email', 'is_verified', 'first_name', 'last_name',
                     'is_staff')
     search_fields = ('first_name', 'last_name', 'email')
@@ -99,4 +79,4 @@ class EmailUserAdmin(UserAdmin):
 admin.site.register(get_user_model(), EmailUserAdmin)
 admin.site.register(SignupCode, SignupCodeAdmin)
 admin.site.register(PasswordResetCode, PasswordResetCodeAdmin)
-admin.site.register(EmailChangeCode, EmailChangeCodeAdmin)
+

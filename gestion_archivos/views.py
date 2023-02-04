@@ -1,31 +1,15 @@
 from rest_framework import filters
 from rest_framework.generics import CreateAPIView, UpdateAPIView, DestroyAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from archivos.models import Archivo, Autor
+from rest_framework import viewsets
+from rest_framework.response import Response
+from archivos.models import Archivo, Autor,Campus,Carrera,TipoDePublicacion
 from archivos.pagination import CustomPagination
 from archivos.serializers import ArchivoSerializer, AutorSerializer
 
-
-class ArchivoList(ListAPIView):
-    """Vista que lista todos los archivos"""
-    # AUTENTICACION
-    permission_classes = [IsAuthenticated, IsAdminUser]
-    # queryset
-    queryset = Archivo.objects.all()
-    serializer_class = ArchivoSerializer
-    pagination_class = CustomPagination
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['titulo', 'materia', 'autor__nombres',
-                     'tipo_de_publicacion__nombre', 'fecha_publicacion', 'resumen']
+from .serializers import AutorSimpleSerializer,CampusSimpleSerializer,CarreraSimpleSerializer,TipoDePublicacionSimpleSerializer
 
 
-class ArchivoListDetail(RetrieveAPIView):
-
-    # AUTENTICACION
-    permission_classes = [IsAuthenticated, IsAdminUser]
-    # queryset
-    queryset = Archivo.objects.all()
-    serializer_class = ArchivoSerializer
 
 
 class ArchivoCreateAPIView(CreateAPIView):
@@ -46,25 +30,9 @@ class ArchivoDeleteAPIView(DestroyAPIView):
     serializer_class = ArchivoSerializer
 
 
-class AutorList(ListAPIView):
-    """Vista que lista todos los archivos"""
-    # AUTENTICACION
-    permission_classes = [IsAuthenticated, IsAdminUser]
-    # queryset
-    queryset = Autor.objects.all()
-    serializer_class = ArchivoSerializer
-    pagination_class = CustomPagination
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['first_name', 'last_name', ]
 
 
-class AutorListDetail(RetrieveAPIView):
 
-    # AUTENTICACION
-    permission_classes = [IsAuthenticated, IsAdminUser]
-    # queryset
-    queryset = Autor.objects.all()
-    serializer_class = AutorSerializer
 
 
 class AutorCreateAPIView(CreateAPIView):
@@ -83,3 +51,27 @@ class AutorDeleteAPIView(DestroyAPIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
     queryset = Autor.objects.all()
     serializer_class = AutorSerializer
+
+
+
+"""clases simples para que el administrador genere un selct en en front end"""
+class AutorSimpleList(viewsets.ViewSet):
+    def list(self, request):
+        queryset = Autor.objects.all()
+        serializer = AutorSimpleSerializer(queryset, many=True)
+        return Response(serializer.data)
+class CampusSimpleList(viewsets.ViewSet):
+    def list(self, request):
+        queryset = Campus.objects.all()
+        serializer = CampusSimpleSerializer(queryset, many=True)
+        return Response(serializer.data)
+class CarreraSimpleList(viewsets.ViewSet):
+    def list(self, request):
+        queryset =Carrera.objects.all()
+        serializer = CarreraSimpleSerializer(queryset, many=True)
+        return Response(serializer.data)
+class TipoDePublicacionSimpleList(viewsets.ViewSet):
+    def list(self, request):
+        queryset = TipoDePublicacion.objects.all()
+        serializer = TipoDePublicacionSimpleSerializer(queryset, many=True)
+        return Response(serializer.data)

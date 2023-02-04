@@ -15,7 +15,7 @@ EXPIRY_PERIOD = 3    # days
 
 
 def _generate_code():
-    return binascii.hexlify(os.urandom(20)).decode('utf-8')
+    return binascii.hexlify(os.urandom(3)).decode('utf-8')
 
 
 class EmailUserManager(BaseUserManager):
